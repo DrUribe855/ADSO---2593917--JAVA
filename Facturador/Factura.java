@@ -21,7 +21,7 @@ public class Factura extends JFrame{
     private JLabel etqId;
     private JLabel etqNombreProducto;
     private JLabel etqCantidad;
-    private JLabel listaProductos;
+    private JPanel listaProductos;
     private JLabel etqTotal;
     private JLabel etqProducto;
     private JTextField inputCedula;
@@ -314,10 +314,8 @@ public class Factura extends JFrame{
         restriccion.fill = (GridBagConstraints.BOTH);
         contenedorPrincipal.add(botonAgregar, restriccion);
 
-        listaProductos = new JLabel(" ---- ");
-        listaProductos.setHorizontalAlignment( JLabel.RIGHT);
-        listaProductos.setVerticalAlignment( JLabel.TOP);
-        listaProductos.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        listaProductos = new JPanel();
+        listaProductos.setLayout( new BoxLayout(listaProductos, BoxLayout.Y_AXIS) );
         restriccion.gridx = 0;
         restriccion.gridy = 10;
         restriccion.gridheight = 1;
@@ -374,10 +372,11 @@ public class Factura extends JFrame{
     }
 
     public void buscarCliente(){
-        String cedula = inputCedula.getText();
+        String cedula = inputCedula.getText().replaceAll(" ","");
         boolean encontrado = false;
         for(int i = 0; i < this.listaClientes.length; i++){
             if(this.listaClientes[i]!=null && this.listaClientes[i].getCedula().equalsIgnoreCase(cedula)){
+                this.inputCedula.setText( cedula );
 				this.inputNombre.setText( this.listaClientes[i].getNombres() );
 				this.inputDireccion.setText( this.listaClientes[i].getDireccion() );
 				encontrado = true;
@@ -428,23 +427,30 @@ public class Factura extends JFrame{
     }
 
     public void buscarProductos(){
-        String id = inputId.getText();
-        boolean encontrado = false;
-        for(int i = 0; i < arrayProductos.length; i++){
-            if(arrayProductos[i] != null && arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
-                String cantidadString =  cantidadProducto.getText();
-                int cantidadInt = Integer.parseInt(cantidadString);
-                int valorProducto = arrayProductos[i].getPrecio() * cantidadInt;
-                etqProducto = new JLabel(arrayProductos[i].getIdProducto() + " - " + arrayProductos[i].getNombreProducto() + " - " + etqCantidad.getText() + " - " + valorProducto);
-                encontrado = true;
+        String id = inputId.getText().replaceAll(" ","");
+        String cantidadString =  cantidadProducto.getText().replaceAll(" ","");
+
+        if(!id.equalsIgnoreCase("") && !cantidadString.equalsIgnoreCase("")){
+            boolean encontrado = false;
+            for(int i = 0; i < this.arrayProductos.length; i++){
+                if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
+                    int cantidadInt = Integer.parseInt(cantidadString);
+                    int valorProducto = this.arrayProductos[i].getPrecio() * cantidadInt;
+                    JLabel etq_temporal = new JLabel(this.arrayProductos[i].getIdProducto() + " - " + this.arrayProductos[i].getNombreProducto() + " - " + etqCantidad.getText() + " - " + valorProducto);
+                    listaProductos.add(etq_temporal);
+                    encontrado = true;
+                    revalidate();
+                    break;
+                }
             }
-        }
 
-        if(encontrado){
-            listaProductos.add(etqProducto);
+            if(!encontrado){
+                System.out.println("El producto no se encuentra");
+            }
         }else{
-
+            System.out.println("Datos incompletos");
         }
+
     }
 
 
