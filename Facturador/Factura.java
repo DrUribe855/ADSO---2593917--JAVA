@@ -369,6 +369,39 @@ public class Factura extends JFrame{
         };
         botonAgregar.addActionListener(eventoAgregarProductos);
 
+        KeyListener eventoKeyBuscarCliente = new KeyListener(){
+            public void keyPressed(KeyEvent e){
+            }
+
+            public void keyReleased(KeyEvent e){
+                String texto = inputCedula.getText();
+                if(texto.equalsIgnoreCase("")){
+                    inputNombre.setText("");
+                    inputDireccion.setText("");
+                }
+            }
+
+            public void keyTyped(KeyEvent e){
+            }
+        };
+
+        KeyListener eventoKeyBuscarVendedor = new KeyListener(){
+            public void keyPressed(KeyEvent e){
+            }
+
+            public void keyReleased(KeyEvent e){
+                buscarVendedor();
+            }
+
+            public void keyTyped(KeyEvent e){
+            }
+        };
+
+        inputCedula.addKeyListener(eventoKeyBuscarCliente);
+        inputCedulaVendedor.addKeyListener(eventoKeyBuscarVendedor);
+        deshabilitarInput(inputNombre);
+        deshabilitarInput(inputDireccion);
+        deshabilitarInput(inputNombresVendedor);
     }
 
     public void buscarCliente(){
@@ -396,7 +429,7 @@ public class Factura extends JFrame{
     }
 
     public void buscarVendedor(){
-        String cedula = inputCedulaVendedor.getText();
+        String cedula = inputCedulaVendedor.getText().replaceAll(" ","");
         boolean encontrado = false;
         for(int i = 0; i < this.listaVendedores.length; i++){
             if(this.listaVendedores[i]!=null && this.listaVendedores[i].getCedula().equalsIgnoreCase(cedula)){
@@ -405,12 +438,11 @@ public class Factura extends JFrame{
                 break;
             }
         }
-
-        if(encontrado){
-            deshabilitarInput(this.inputNombresVendedor);
-        }else{
-            deshabilitarInput(this.inputNombresVendedor);
+        if(!encontrado){
+            //this.inputCedulaVendedor.requestFocus();
             this.inputNombresVendedor.setText("VENDEDOR NO ENCONTRADO");
+        }else{
+            //this.inputId.requestFocus();
         }
     }
 

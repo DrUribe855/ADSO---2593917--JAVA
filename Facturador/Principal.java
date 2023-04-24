@@ -11,7 +11,7 @@ public class Principal{
 		listaClientes[3] = new Persona("108803", "Catalina Mendez", "Calle 17");
 		listaClientes[4] = new Persona("108804", "Andres Lopez", "Calle 16");
 
-        listaVendedores[0] = new Persona("108800", "Oscar Loaiza", "Calle 20");
+        listaVendedores[0] = new Persona("108800", "Oscar Loaiza", "");
 
         arrayProductos[0] = new Productos("1", "Arroz", 2000);
         
