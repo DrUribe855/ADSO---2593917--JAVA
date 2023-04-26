@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.border.LineBorder;
+
 
 
 public class Factura extends JFrame{
@@ -428,7 +430,7 @@ public class Factura extends JFrame{
         }
     }
 
-    public void buscarVendedor(){
+    public boolean buscarVendedor(){
         String cedula = inputCedulaVendedor.getText().replaceAll(" ","");
         boolean encontrado = false;
         for(int i = 0; i < this.listaVendedores.length; i++){
@@ -440,9 +442,11 @@ public class Factura extends JFrame{
         }
         if(!encontrado){
             //this.inputCedulaVendedor.requestFocus();
-            this.inputNombresVendedor.setText("VENDEDOR NO ENCONTRADO");
+            this.inputNombresVendedor.setText("    VENDEDOR NO ENCONTRADO");
+            return false;
         }else{
-            //this.inputId.requestFocus();
+            this.inputId.requestFocus();
+            return true;
         }
     }
 
@@ -464,26 +468,30 @@ public class Factura extends JFrame{
 
         if(!id.equalsIgnoreCase("") && !cantidadString.equalsIgnoreCase("")){
             boolean encontrado = false;
-            for(int i = 0; i < this.arrayProductos.length; i++){
-                if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
-                    int cantidadInt = Integer.parseInt(cantidadString);
-                    int valorProducto = this.arrayProductos[i].getPrecio() * cantidadInt;
-                    JLabel etq_temporal = new JLabel(this.arrayProductos[i].getIdProducto() + " - " + this.arrayProductos[i].getNombreProducto() + " - " + etqCantidad.getText() + " - " + valorProducto);
-                    listaProductos.add(etq_temporal);
-                    encontrado = true;
-                    revalidate();
-                    break;
+            if(!buscarVendedor()){
+                LineBorder borderFalse = new LineBorder(Color.RED, 1, true);
+                inputNombresVendedor.setBorder(borderFalse);
+            }else{
+                inputNombresVendedor.setBorder( BorderFactory.createEmptyBorder(5, 10, 5, 10) );
+                for(int i = 0; i < this.arrayProductos.length; i++){
+                    if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
+                        int cantidadInt = Integer.parseInt(cantidadString);
+                        int valorProducto = this.arrayProductos[i].getPrecio() * cantidadInt;
+                        JLabel etq_temporal = new JLabel(this.arrayProductos[i].getIdProducto() + " - " + this.arrayProductos[i].getNombreProducto() + " - " + cantidadProducto.getText() + " - " + valorProducto);                    listaProductos.add(etq_temporal);
+                        encontrado = true;
+                        revalidate();
+                        break;
+                    }
+                }
+                if(!encontrado){
+                    System.out.println("El producto no se encuentra");
                 }
             }
 
-            if(!encontrado){
-                System.out.println("El producto no se encuentra");
-            }
         }else{
             System.out.println("Datos incompletos");
         }
 
     }
-
 
 }
