@@ -12,6 +12,7 @@ public class Factura extends JFrame{
     private Persona listaClientes [];
     private Persona listaVendedores [];
     private Productos arrayProductos [];
+    private int totalCompra = 0;
     private JLabel encabezadoDatosClientes;
     private JLabel encabezadoDatosVendedor;
     private JLabel encabezadoDatosProductos;
@@ -332,7 +333,7 @@ public class Factura extends JFrame{
         
         contenedorPrincipal.add(listaProductos, restriccion);
 
-        etqTotal = new JLabel("Total: $ 0");
+        etqTotal = new JLabel("Total: $ " + totalCompra);
         etqTotal.setHorizontalAlignment(JLabel.RIGHT);
         etqTotal.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         restriccion.gridx = 0;
@@ -510,6 +511,8 @@ public class Factura extends JFrame{
                     listaProductos.add(etq_temporal);
                     nombreProducto.setText(arrayProductos[i].getNombreProducto());
                     encontrado = true;
+                    totalCompra += valorProducto;
+                    etqTotal.setText("Total: $ " + Integer.toString(totalCompra));
                     this.inputId.setText("");
                     revalidate();
                     break;
@@ -543,6 +546,21 @@ public class Factura extends JFrame{
             cantidadProducto.setText("1");
             agregarProductos();
         }
+    }
+
+    public void registrarCliente(){
+        String nuevaCedula = this.inputCedula.getText();
+        String nuevoNombre = this.inputNombre.getText().replaceAll(" ","");
+        String nuevaDireccion = this.inputDireccion.getText().replaceAll(" ","");
+        Persona temporal = new Persona(nuevaCedula, nuevoNombre,nuevaDireccion);
+        for(int j = 0; j < listaClientes.length; j++){
+            if(listaClientes[j] == null){
+                listaClientes[j] = temporal;
+            }
+        }
+        // this.inputCedula.setText("");
+        this.inputNombre.setText("");
+        this.inputDireccion.setText("");
     }
 
 }
