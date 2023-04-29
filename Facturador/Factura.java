@@ -26,6 +26,7 @@ public class Factura extends JFrame{
     private JPanel listaProductos;
     private JLabel etqTotal;
     private JLabel etqProducto;
+    private JLabel etq_temporal;
     private JTextField inputCedula;
     private JTextField inputNombre;
     private JTextField inputDireccion;
@@ -364,12 +365,12 @@ public class Factura extends JFrame{
         };
         buscarVendedor.addActionListener(eventoBuscarVendedor);
 
-        ActionListener eventoAgregarProductos = new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                buscarProductos();
-            }
-        };
-        botonAgregar.addActionListener(eventoAgregarProductos);
+        // ActionListener eventoAgregarProductos = new ActionListener(){
+        //     public void actionPerformed(ActionEvent e){
+        //         buscarProductos();
+        //     }
+        // };
+        // botonAgregar.addActionListener(eventoAgregarProductos);
 
         KeyListener eventoKeyBuscarCliente = new KeyListener(){
             public void keyPressed(KeyEvent e){
@@ -398,12 +399,40 @@ public class Factura extends JFrame{
             public void keyTyped(KeyEvent e){
             }
         };
+        KeyListener eventoKeyBuscarProducto = new KeyListener(){
+            public void keyPressed(KeyEvent e){
+            }
+
+            public void keyReleased(KeyEvent e){
+                buscarProductos();
+            }   
+
+            public void keyTyped(KeyEvent e){
+               
+            }
+        };
+        KeyListener eventoKeyAgregarProductos = new KeyListener(){
+            public void keyPressed(KeyEvent e){
+
+            }
+
+            public void keyReleased(KeyEvent e){
+            }
+
+            public void keyTyped(KeyEvent e){
+                agregarProductos();
+            }
+        };
 
         inputCedula.addKeyListener(eventoKeyBuscarCliente);
         inputCedulaVendedor.addKeyListener(eventoKeyBuscarVendedor);
+        inputId.addKeyListener(eventoKeyBuscarProducto);
+        inputId.addKeyListener(eventoKeyAgregarProductos);
+        deshabilitarInput(nombreProducto);
         deshabilitarInput(inputNombre);
         deshabilitarInput(inputDireccion);
         deshabilitarInput(inputNombresVendedor);
+
     }
 
     public void buscarCliente(){
@@ -443,8 +472,11 @@ public class Factura extends JFrame{
         if(!encontrado){
             //this.inputCedulaVendedor.requestFocus();
             this.inputNombresVendedor.setText("    VENDEDOR NO ENCONTRADO");
+            LineBorder borderFalse = new LineBorder(Color.RED, 1, true);
+            inputNombresVendedor.setBorder(borderFalse);
             return false;
         }else{
+            inputNombresVendedor.setBorder( BorderFactory.createEmptyBorder(5, 10, 5, 10) );
             this.inputId.requestFocus();
             return true;
         }
@@ -462,36 +494,55 @@ public class Factura extends JFrame{
         input.setEnabled(true);
     }
 
-    public void buscarProductos(){
+    public void agregarProductos(){
         String id = inputId.getText().replaceAll(" ","");
         String cantidadString =  cantidadProducto.getText().replaceAll(" ","");
+        String nombresUsuario = inputNombre.getText().replaceAll(" ","");
+        String nombresVendedor = inputNombresVendedor.getText().replaceAll(" ","");
 
-        if(!id.equalsIgnoreCase("") && !cantidadString.equalsIgnoreCase("")){
+        if(!id.equalsIgnoreCase("") && !cantidadString.equalsIgnoreCase("") && !nombresVendedor.equalsIgnoreCase("") && !nombresUsuario.equalsIgnoreCase("")){
             boolean encontrado = false;
-            if(!buscarVendedor()){
-                LineBorder borderFalse = new LineBorder(Color.RED, 1, true);
-                inputNombresVendedor.setBorder(borderFalse);
-            }else{
-                inputNombresVendedor.setBorder( BorderFactory.createEmptyBorder(5, 10, 5, 10) );
-                for(int i = 0; i < this.arrayProductos.length; i++){
-                    if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
-                        int cantidadInt = Integer.parseInt(cantidadString);
-                        int valorProducto = this.arrayProductos[i].getPrecio() * cantidadInt;
-                        JLabel etq_temporal = new JLabel(this.arrayProductos[i].getIdProducto() + " - " + this.arrayProductos[i].getNombreProducto() + " - " + cantidadProducto.getText() + " - " + valorProducto);                    listaProductos.add(etq_temporal);
-                        encontrado = true;
-                        revalidate();
-                        break;
-                    }
-                }
-                if(!encontrado){
-                    System.out.println("El producto no se encuentra");
+            for(int i = 0; i < this.arrayProductos.length; i++){
+                if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
+                    int cantidadInt = Integer.parseInt(cantidadString);
+                    int valorProducto = this.arrayProductos[i].getPrecio() * cantidadInt;
+                    etq_temporal = new JLabel(this.arrayProductos[i].getIdProducto() + " - " + this.arrayProductos[i].getNombreProducto() + " - " + cantidadProducto.getText() + " - " + valorProducto);                    
+                    listaProductos.add(etq_temporal);
+                    nombreProducto.setText(arrayProductos[i].getNombreProducto());
+                    encontrado = true;
+                    this.inputId.setText("");
+                    revalidate();
+                    break;
                 }
             }
+            if(!encontrado){
+                nombreProducto.setText("No encontrado");
+            }
 
-        }else{
-            System.out.println("Datos incompletos");
+
         }
+    }
 
+    
+
+    public void buscarProductos(){
+        String id = inputId.getText().replaceAll(" ","");
+        boolean encontrado = false;
+        if(!id.equalsIgnoreCase("")){
+            for(int i = 0; i < this.arrayProductos.length; i++){
+                if(this.arrayProductos[i] != null && this.arrayProductos[i].getIdProducto().equalsIgnoreCase(id)){
+                    this.nombreProducto.setText( this.arrayProductos[i].getNombreProducto());
+                    encontrado = true;
+                    break;
+                }
+            }
+        }
+        if(!encontrado){
+            this.nombreProducto.setText("");
+        }else{
+            cantidadProducto.setText("1");
+            agregarProductos();
+        }
     }
 
 }

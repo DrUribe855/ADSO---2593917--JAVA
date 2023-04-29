@@ -13,7 +13,10 @@ public class Principal{
 
         listaVendedores[0] = new Persona("108800", "Oscar Loaiza", "");
 
-        arrayProductos[0] = new Productos("1", "Arroz", 2000);
+        arrayProductos[0] = new Productos("7121100001", "Arroz", 2000);
+        arrayProductos[1] = new Productos("7700304607808", "Aceite", 2000);
+        arrayProductos[2] = new Productos("7909189205998", "Atun", 2000);
+        arrayProductos[3] = new Productos("7700304670574", "Frijoles", 2000);
         
         Factura factura = new Factura(listaClientes, listaVendedores,arrayProductos);
     }
