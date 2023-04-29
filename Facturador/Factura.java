@@ -9,6 +9,8 @@ import javax.swing.border.LineBorder;
 
 public class Factura extends JFrame{
 
+
+
     private Persona listaClientes [];
     private Persona listaVendedores [];
     private Productos arrayProductos [];
@@ -41,6 +43,8 @@ public class Factura extends JFrame{
     private JButton botonAgregar;
 
     
+    //**Creacion de constructor **//
+
     public Factura(Persona[] listaClientes, Persona[] listaVendedores, Productos [] arrayProductos){
 
         this.listaClientes = listaClientes;
@@ -50,7 +54,11 @@ public class Factura extends JFrame{
         initComponents();
     }
 
+    //**Creacion de componentes */
+
     public void initComponents(){
+
+        //**Configuracion de la ventana (tamanios, bordes, etc) */
 
         Toolkit sistema = Toolkit.getDefaultToolkit();
         Dimension tamanio = sistema.getScreenSize();
@@ -65,6 +73,8 @@ public class Factura extends JFrame{
         contenedorPrincipal.setLayout(new GridBagLayout());
         contenedorPrincipal.setBorder( BorderFactory.createEmptyBorder(20,20,20,20));
         GridBagConstraints restriccion = new GridBagConstraints();
+
+        //**  --- Seccion usuario --- */
 
         encabezadoDatosClientes = new JLabel("DATOS CLIENTE: ");
         encabezadoDatosClientes.setVerticalAlignment(JLabel.TOP);
@@ -157,6 +167,8 @@ public class Factura extends JFrame{
         restriccion.insets = new Insets(0,10,10,10);
         contenedorPrincipal.add(inputDireccion, restriccion);
 
+        //** --- Seccion vendedor ---  */
+
         encabezadoDatosVendedor = new JLabel("DATOS VENDEDOR: ");
         encabezadoDatosVendedor.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
         encabezadoDatosVendedor.setFont(new Font("Arial", Font.BOLD, 20));
@@ -225,6 +237,8 @@ public class Factura extends JFrame{
         restriccion.insets = new Insets(10,10,10,10);
         restriccion.fill = (GridBagConstraints.BOTH);
         contenedorPrincipal.add(inputNombresVendedor, restriccion);
+
+        //** --- Seccion productos --- */
 
         encabezadoDatosProductos = new JLabel("PRODUCTOS ");
         encabezadoDatosProductos.setBorder( BorderFactory.createEmptyBorder(0, 0, 10, 0) );
@@ -318,6 +332,8 @@ public class Factura extends JFrame{
         restriccion.fill = (GridBagConstraints.BOTH);
         contenedorPrincipal.add(botonAgregar, restriccion);
 
+        //** --- Seccion factura --- */
+
         listaProductos = new JPanel();
         listaProductos.setLayout( new BoxLayout(listaProductos, BoxLayout.Y_AXIS) );
         restriccion.gridx = 0;
@@ -352,6 +368,8 @@ public class Factura extends JFrame{
         revalidate();
         setVisible(true);
 
+        //** --- Eventos de botones --- */
+
         ActionListener eventoBuscarCliente = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				buscarCliente();
@@ -366,12 +384,8 @@ public class Factura extends JFrame{
         };
         buscarVendedor.addActionListener(eventoBuscarVendedor);
 
-        // ActionListener eventoAgregarProductos = new ActionListener(){
-        //     public void actionPerformed(ActionEvent e){
-        //         buscarProductos();
-        //     }
-        // };
-        // botonAgregar.addActionListener(eventoAgregarProductos);
+
+        //** --- Eventos de inputs --- */
 
         KeyListener eventoKeyBuscarCliente = new KeyListener(){
             public void keyPressed(KeyEvent e){
@@ -435,6 +449,8 @@ public class Factura extends JFrame{
         deshabilitarInput(inputNombresVendedor);
 
     }
+
+    //** --- Metodos usados en el codigo --- */
 
     public void buscarCliente(){
         String cedula = inputCedula.getText().replaceAll(" ","");
@@ -525,8 +541,6 @@ public class Factura extends JFrame{
 
         }
     }
-
-    
 
     public void buscarProductos(){
         String id = inputId.getText().replaceAll(" ","");
