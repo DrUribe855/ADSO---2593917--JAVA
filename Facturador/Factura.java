@@ -455,7 +455,11 @@ public class Factura extends JFrame{
     public void buscarCliente(){
         String cedula = inputCedula.getText().replaceAll(" ","");
         boolean encontrado = false;
+        System.out.println("\n\nLista de Clientes: ");
         for(int i = 0; i < this.listaClientes.length; i++){
+            if(this.listaClientes[i]!=null){
+                System.out.println("  => "+this.listaClientes[i].getCedula()+" - "+this.listaClientes[i].getNombres());
+            }
             if(this.listaClientes[i]!=null && this.listaClientes[i].getCedula().equalsIgnoreCase(cedula)){
                 this.inputCedula.setText( cedula );
 				this.inputNombre.setText( this.listaClientes[i].getNombres() );
@@ -530,6 +534,8 @@ public class Factura extends JFrame{
                     totalCompra += valorProducto;
                     etqTotal.setText("Total: $ " + Integer.toString(totalCompra));
                     this.inputId.setText("");
+
+                    registrarCliente();
                     revalidate();
                     break;
                 }
@@ -563,18 +569,33 @@ public class Factura extends JFrame{
     }
 
     public void registrarCliente(){
-        String nuevaCedula = this.inputCedula.getText();
-        String nuevoNombre = this.inputNombre.getText().replaceAll(" ","");
-        String nuevaDireccion = this.inputDireccion.getText().replaceAll(" ","");
-        Persona temporal = new Persona(nuevaCedula, nuevoNombre,nuevaDireccion);
+        String nuevaCedula = this.inputCedula.getText().replaceAll(" ","");
+        String nuevoNombre = this.inputNombre.getText();
+        String nuevaDireccion = this.inputDireccion.getText();
+        
+        // Validar que no exista
+        boolean valido = true;
         for(int j = 0; j < listaClientes.length; j++){
-            if(listaClientes[j] == null){
-                listaClientes[j] = temporal;
+            if(listaClientes[j]!=null && listaClientes[j].getCedula().equalsIgnoreCase(nuevaCedula)){
+                valido = false;
+                break;
             }
         }
-        // this.inputCedula.setText("");
-        this.inputNombre.setText("");
-        this.inputDireccion.setText("");
+
+        if(valido){
+            // Agregar en el Primer null
+            Persona temporal = new Persona(nuevaCedula, nuevoNombre,nuevaDireccion);
+            for(int j = 0; j < listaClientes.length; j++){
+                if(listaClientes[j] == null){
+                    listaClientes[j] = temporal;
+                    break;
+                }
+            }
+
+            this.inputCedula.setText("");
+            deshabilitarInput(this.inputNombre);
+            deshabilitarInput(this.inputDireccion);
+        }
     }
 
 }
