@@ -98,7 +98,9 @@ public class Triki extends JFrame{
 			this.tablero_lbls[fila][columna].setForeground( (this.turno==1)? Color.black:Color.red );
 			this.turno = (this.turno%2)+1;
 			this.imprimirTablero();
-			this.marcarCasillaMaquina();
+			if(this.turno == 2){
+				this.marcarCasillaMaquina();
+			}
 		}else{
 			System.out.println("La Posicion es invalida.");
 		}
@@ -110,31 +112,31 @@ public class Triki extends JFrame{
 		/* Filas */
 		// Fila 0 -> X X -
 		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][2] == '-'){
-			this.tablero_interno[0][2] = '0';
+			marcarCasilla(0, 2);
 		// Fila 0 -> X - X
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[0][1] == '-'){
-			this.tablero_interno[0][1] = '0';
+			marcarCasilla(0, 1);
 		// Fila 0 -> - X X
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][0] == '-'){
-			this.tablero_interno[0][0] = '0';
+			marcarCasilla(0, 0);
 		//Fila 1 -> X X -
 		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[1][2] == '-'){
-			this.tablero_interno[1][2] = '0';
+			marcarCasilla(1, 2);
 		//Fila 1 -> X - X
 		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[1][1] == '-'){
-			this.tablero_interno[1][1] = '0';
+			marcarCasilla(1, 1);
 		//Fila 1 -> - X X
 		}else if(this.tablero_interno[1][2] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[1][0] == '-'){
-			this.tablero_interno[1][0] = '0';
+			marcarCasilla(1, 0);
 		//Fila 2 -> X X -
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == '-'){
-			this.tablero_interno[2][2] = '0';
+			marcarCasilla(2, 2);
 		//Fila 2 -> X - X
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[2][1] == '-'){
-			this.tablero_interno[2][1] = '0';
+			marcarCasilla(2, 1);
 		//Fila 2 -> - X X
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[2][0] == '-'){
-			this.tablero_interno[2][0] = '0';
+			marcarCasilla(2, 0);
 		}
 
 		/* Columnas */
@@ -145,63 +147,63 @@ public class Triki extends JFrame{
 		 * -
 		 */
 		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][0] == 'X' && this.tablero_interno[2][0] == '-'){
-			this.tablero_interno[2][0] = '0';
+			marcarCasilla(2, 0);
 		/*Columna 0
 		 * X
 		 * -
 		 * X
 		 */
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][0] == '-'){
-			this.tablero_interno[1][0] = '0';
+			marcarCasilla(1, 0);
 		/*Columna 0
 		 * -
 		 * X
 		 * X
 		 */
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][0] == 'X' && this.tablero_interno[0][0] == '-'){
-			this.tablero_interno[0][0] = '0';
+			marcarCasilla(0, 0);
 		/*Columna 1 
 		 * X
 		 * X
 		 * -
 		*/
 		}else if(this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][1] == '-'){
-			this.tablero_interno[2][1] = '0';
+			marcarCasilla(2, 1);
 		/*Columna 1
 		 * X
 		 * -
 		 * X
 		 */
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][1] == '-'){
-			this.tablero_interno[1][1] = '0';
+			marcarCasilla(1, 1);
 		/*Columna 1 
 		 * -
 		 * X
 		 * X
 		*/
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][1] == '-'){
-			this.tablero_interno[0][1] = '0';
+			marcarCasilla(0, 1);
 		/*Columna 2
 		 * X
 		 * X
 		 * -
 		 */
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[2][2] == '-'){
-			this.tablero_interno[2][2] = '0';
+			marcarCasilla(2, 2);
 		/*Columna 2
 		 * X
 		 * -
 		 * X
 		 */
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][2] == '-'){
-			this.tablero_interno[1][2] = '0';
+			marcarCasilla(1, 2);
 		/*Columna 2
 		 * -
 		 * X
 		 * X
 		 */
 		}else if(this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[0][2] == '-'){
-			this.tablero_interno[0][2] = '0';
+			marcarCasilla(0, 2);
 		}
 
 		/*Diagonal 1
@@ -212,13 +214,13 @@ public class Triki extends JFrame{
 
 		 /*X X - */
 		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][2] == '-'){
-			this.tablero_interno[2][2] = '0';
+			marcarCasilla(2, 2);
 		/*X - X */
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][1] == '-'){
-			this.tablero_interno[1][1] = '0';
+			marcarCasilla(1, 1);
 		/* - X X */
 		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[0][0] == '-'){
-			this.tablero_interno[0][0] = '0';
+			marcarCasilla(0, 0);
 		}
 
 		/*Diagonal 2
@@ -229,13 +231,13 @@ public class Triki extends JFrame{
 
 		/*X X - */
 		if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == '-'){
-			this.tablero_interno[0][2] = '0';
+			marcarCasilla(0, 2);
 		/*X - X */
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[1][1] == '-'){
-			this.tablero_interno[1][1] = '0';
+			marcarCasilla(1, 1);
 		/*- X X */
 		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][0] == '-'){
-			this.tablero_interno[2][0] = '0';
+			marcarCasilla(2, 0);
 		}
 	}	
 }
