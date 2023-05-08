@@ -63,8 +63,11 @@ public class Triki extends JFrame{
                 MouseAdapter evento = new MouseAdapter(){
                     @Override
 	                public void mouseClicked(MouseEvent e) {
+
 	                	if(validarCasillaVacia()){
-	                    	marcarCasillaUsuario( fila, columna);
+	                		if(tablero_lbls[fila][columna].isEnabled()){
+	                    		marcarCasillaUsuario( fila, columna);
+	                		}
 	                	}
 	                }             
                 };
@@ -80,6 +83,24 @@ public class Triki extends JFrame{
 		setVisible(true);
 
 		imprimirTablero();
+	}
+
+	public void imprimirTableroConsola(){
+		for (int i=0; i<tablero_interno.length; i++) {
+			for (int j=0; j<tablero_interno[i].length; j++) {
+				System.out.print("["+this.tablero_interno[i][j]+"]");
+			}
+			System.out.println();
+		}
+		System.out.println("\n\n");
+	}
+
+	public void deshabilitarTablero(){
+		for (int i=0; i<tablero_lbls.length; i++) {
+			for (int j=0; j<tablero_lbls[i].length; j++) {
+				tablero_lbls[i][j].setEnabled(false);
+			}
+		}
 	}
 
 	public void imprimirTablero(){
@@ -99,16 +120,24 @@ public class Triki extends JFrame{
 			System.out.println("Turno usuario.");
 			marcarCasilla(fila, columna);
 			// Validar si Gano.
-			validarGanador();
-
-			this.turno = (this.turno%2)+1;
-			if(this.turno==2 && this.validarCasillaVacia()){
-				System.out.println("Turno Maquina.");
-				this.marcarCasillaMaquina();
-				// Validar si Gano
-				validarGanador();
+			if (validarGanador()) {
+				// Gano el usuario
+				System.out.println("Gano el Usuario");
+			}else{
 				this.turno = (this.turno%2)+1;
+				if(this.turno==2 && this.validarCasillaVacia()){
+					System.out.println("Turno Maquina.");
+					this.marcarCasillaMaquina();
+					
+					if (validarGanador()) {
+						// Gano la maquina
+						System.out.println("Gano la Maquina");
+					}else{
+						this.turno = (this.turno%2)+1;
+					}
+				}
 			}
+			
 
 		}else{
 			System.out.println("La Posicion es invalida.");
@@ -256,13 +285,15 @@ public class Triki extends JFrame{
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == '-'){
 			marcarCasilla(2,2);
 		}else{
-			System.out.println("generando pos aleatoria.");
-			int fila = (int) (Math.random()*2);
-			int columna = (int) (Math.random()*2);
+			imprimirTableroConsola();
+
+			int fila = (int) (Math.random()*3);
+			int columna = (int) (Math.random()*3);
+			System.out.println("generando pos aleatoria: ["+fila+"]["+columna+"]");
 			while(this.tablero_interno[fila][columna]!='-'){
-				System.out.println("generando pos aleatoria.");
 				fila = (int) (Math.random()*2);
 				columna = (int) (Math.random()*2);
+				System.out.println("generando pos aleatoria: ["+fila+"]["+columna+"]");
 			}
 			marcarCasilla(fila, columna);
 		}
@@ -281,6 +312,7 @@ public class Triki extends JFrame{
 			tablero_interno[0][0] == tablero_interno[1][1] && tablero_interno[0][0] == tablero_interno[2][2] && tablero_interno[0][0] != '-'){
 			System.out.print("El ganador es la ficha: ");
 			gano = true;
+			deshabilitarTablero();
 		}
 
 		return gano;
