@@ -99,12 +99,14 @@ public class Triki extends JFrame{
 			System.out.println("Turno usuario.");
 			marcarCasilla(fila, columna);
 			// Validar si Gano.
+			validarGanador();
 
 			this.turno = (this.turno%2)+1;
 			if(this.turno==2 && this.validarCasillaVacia()){
 				System.out.println("Turno Maquina.");
 				this.marcarCasillaMaquina();
 				// Validar si Gano
+				validarGanador();
 				this.turno = (this.turno%2)+1;
 			}
 
@@ -235,6 +237,16 @@ public class Triki extends JFrame{
 			marcarCasilla(1, 1);
 		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][0] == '-'){
 			marcarCasilla(2, 0);
+		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[2][2] == '-'){
+			marcarCasilla(2,2);
+		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][0] == '-'){
+			marcarCasilla(2,0);
+		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][0] == '-'){
+			marcarCasilla(0,0);
+		}else if(this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[0][2] == '-'){
+			marcarCasilla(0,2);
+		}else if(this.tablero_interno[0][0] == 'X' || this.tablero_interno[0][2] == 'X' || this.tablero_interno[2][0] == 'X' || this.tablero_interno[2][2] == 'X'){
+			marcarCasilla(1,1);
 		}else{
 			System.out.println("generando pos aleatoria.");
 			int fila = (int) (Math.random()*2);
@@ -246,6 +258,24 @@ public class Triki extends JFrame{
 			}
 			marcarCasilla(fila, columna);
 		}
+	}
+
+	public boolean validarGanador(){
+		boolean gano = false;
+
+		if(tablero_interno[0][0] == tablero_interno[0][1] && tablero_interno[0][0] == tablero_interno[0][2] && tablero_interno[0][0] != '-' ||
+			tablero_interno[1][0] == tablero_interno[1][1] && tablero_interno[1][0] == tablero_interno[1][2] && tablero_interno[1][0] != '-'||
+			tablero_interno[2][0] == tablero_interno[2][1] && tablero_interno[2][0] == tablero_interno[2][2] && tablero_interno[2][0] != '-'||
+			tablero_interno[0][0] == tablero_interno[1][0] && tablero_interno[0][0] == tablero_interno[2][0] && tablero_interno[0][0] != '-'||
+			tablero_interno[0][1] == tablero_interno[1][1] && tablero_interno[0][1] == tablero_interno[2][1] && tablero_interno[0][1] != '-'||
+			tablero_interno[0][2] == tablero_interno[1][2] && tablero_interno[0][2] == tablero_interno[2][2] && tablero_interno[0][2] != '-'||
+			tablero_interno[2][0] == tablero_interno[1][1] && tablero_interno[2][0] == tablero_interno[0][2] && tablero_interno[2][0] != '-'||
+			tablero_interno[0][0] == tablero_interno[1][1] && tablero_interno[0][0] == tablero_interno[2][2] && tablero_interno[0][0] != '-'){
+			System.out.print("El ganador es la ficha: ");
+			gano = true;
+		}
+
+		return gano;
 	}	
 
 
