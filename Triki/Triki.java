@@ -63,7 +63,9 @@ public class Triki extends JFrame{
                 MouseAdapter evento = new MouseAdapter(){
                     @Override
 	                public void mouseClicked(MouseEvent e) {
-	                    marcarCasilla( fila, columna);
+	                	if(validarCasillaVacia()){
+	                    	marcarCasillaUsuario( fila, columna);
+	                	}
 	                }             
                 };
                 this.tablero_lbls[i][j].addMouseListener(evento);
@@ -89,155 +91,162 @@ public class Triki extends JFrame{
 			}
 		}
 		revalidate();
+		repaint();
 	}
 
-	public void marcarCasilla(int fila, int columna){
+	public void marcarCasillaUsuario(int fila, int columna){
 		if( this.tablero_interno[fila][columna]=='-'){
-			char ficha = (this.turno==1)? 'X':'0';
-			this.tablero_interno[fila][columna] = ficha;
-			this.tablero_lbls[fila][columna].setForeground( (this.turno==1)? Color.black:Color.red );
+			System.out.println("Turno usuario.");
+			marcarCasilla(fila, columna);
+			// Validar si Gano.
+
 			this.turno = (this.turno%2)+1;
-			this.imprimirTablero();
-			if(this.turno == 2){
+			if(this.turno==2 && this.validarCasillaVacia()){
+				System.out.println("Turno Maquina.");
 				this.marcarCasillaMaquina();
+				// Validar si Gano
+				this.turno = (this.turno%2)+1;
 			}
+
 		}else{
 			System.out.println("La Posicion es invalida.");
 		}
+	}
 
+	public boolean validarCasillaVacia(){
+		boolean valido = false;
+		for (int i=0; i<this.tablero_interno.length; i++) {
+			for (int j=0; j<this.tablero_interno[i].length; j++) {
+				if(this.tablero_interno[i][j]=='-'){
+					valido = true;
+					break;
+				}
+			}
+		}
+		return valido;
+	}
+
+	public void marcarCasilla(int fila, int columna){
+		char ficha = (this.turno==1)? 'X':'0';
+		this.tablero_interno[fila][columna] = ficha;
+		this.tablero_lbls[fila][columna].setForeground( (this.turno==1)? Color.black:Color.red );
+		this.imprimirTablero();
 	}
 
 	public void marcarCasillaMaquina(){
 		
-		/* Filas */
-		// Fila 0 -> X X -
-		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][2] == '-'){
+		if(this.tablero_interno[0][0] == '0' && this.tablero_interno[0][1] == '0' && this.tablero_interno[0][2] == '-'){
 			marcarCasilla(0, 2);
-		// Fila 0 -> X - X
+		}else if(this.tablero_interno[0][0] == '0' && this.tablero_interno[0][2] == '0' && this.tablero_interno[0][1] == '-'){
+			marcarCasilla(0, 1);
+		}else if(this.tablero_interno[0][2] == '0' && this.tablero_interno[0][1] == '0' && this.tablero_interno[0][0] == '-'){
+			marcarCasilla(0, 0);
+		}else if(this.tablero_interno[1][0] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[1][2] == '-'){
+			marcarCasilla(1, 2);
+		}else if(this.tablero_interno[1][0] == '0' && this.tablero_interno[1][2] == '0' && this.tablero_interno[1][1] == '-'){
+			marcarCasilla(1, 1);
+		}else if(this.tablero_interno[1][2] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[1][0] == '-'){
+			marcarCasilla(1, 0);
+		}else if(this.tablero_interno[2][0] == '0' && this.tablero_interno[2][1] == '0' && this.tablero_interno[2][2] == '-'){
+			marcarCasilla(2, 2);
+		}else if(this.tablero_interno[2][0] == '0' && this.tablero_interno[2][2] == '0' && this.tablero_interno[2][1] == '-'){
+			marcarCasilla(2, 1);
+		}else if(this.tablero_interno[2][1] == '0' && this.tablero_interno[2][2] == '0' && this.tablero_interno[2][0] == '-'){
+			marcarCasilla(2, 0);
+		}else if(this.tablero_interno[0][0] == '0' && this.tablero_interno[1][0] == '0' && this.tablero_interno[2][0] == '-'){
+			marcarCasilla(2, 0);
+		}else if(this.tablero_interno[0][0] == '0' && this.tablero_interno[2][0] == '0' && this.tablero_interno[1][0] == '-'){
+			marcarCasilla(1, 0);
+		}else if(this.tablero_interno[2][0] == '0' && this.tablero_interno[1][0] == '0' && this.tablero_interno[0][0] == '-'){
+			marcarCasilla(0, 0);
+		}else if(this.tablero_interno[0][1] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[2][1] == '-'){
+			marcarCasilla(2, 1);
+		}else if(this.tablero_interno[2][1] == '0' && this.tablero_interno[0][1] == '0' && this.tablero_interno[1][1] == '-'){
+			marcarCasilla(1, 1);
+		}else if(this.tablero_interno[2][1] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[0][1] == '-'){
+			marcarCasilla(0, 1);
+		}else if(this.tablero_interno[0][2] == '0' && this.tablero_interno[1][2] == '0' && this.tablero_interno[2][2] == '-'){
+			marcarCasilla(2, 2);
+		}else if(this.tablero_interno[0][2] == '0' && this.tablero_interno[2][2] == '0' && this.tablero_interno[1][2] == '-'){
+			marcarCasilla(1, 2);
+		}else if(this.tablero_interno[2][2] == '0' && this.tablero_interno[1][2] == '0' && this.tablero_interno[0][2] == '-'){
+			marcarCasilla(0, 2);
+		}else if(this.tablero_interno[0][0] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[2][2] == '-'){
+			marcarCasilla(2, 2);
+		}else if(this.tablero_interno[0][0] == '0' && this.tablero_interno[2][2] == '0' && this.tablero_interno[1][1] == '-'){
+			marcarCasilla(1, 1);
+		}else if(this.tablero_interno[1][1] == '0' && this.tablero_interno[2][2] == '0' && this.tablero_interno[0][0] == '-'){
+			marcarCasilla(0, 0);
+		}else if(this.tablero_interno[2][0] == '0' && this.tablero_interno[1][1] == '0' && this.tablero_interno[0][2] == '-'){
+			marcarCasilla(0, 2);
+		}else if(this.tablero_interno[2][0] == '0' && this.tablero_interno[0][2] == '0' && this.tablero_interno[1][1] == '-'){
+			marcarCasilla(1, 1);
+		}else if(this.tablero_interno[1][1] == '0' && this.tablero_interno[0][2] == '0' && this.tablero_interno[2][0] == '-'){
+			marcarCasilla(2, 0);
+
+		//
+		//  Condiciones de Defensa
+		//
+		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][2] == '-'){
+			marcarCasilla(0, 2);
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[0][1] == '-'){
 			marcarCasilla(0, 1);
-		// Fila 0 -> - X X
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[0][0] == '-'){
 			marcarCasilla(0, 0);
-		//Fila 1 -> X X -
 		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[1][2] == '-'){
 			marcarCasilla(1, 2);
-		//Fila 1 -> X - X
 		}else if(this.tablero_interno[1][0] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[1][1] == '-'){
 			marcarCasilla(1, 1);
-		//Fila 1 -> - X X
 		}else if(this.tablero_interno[1][2] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[1][0] == '-'){
 			marcarCasilla(1, 0);
-		//Fila 2 -> X X -
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == '-'){
 			marcarCasilla(2, 2);
-		//Fila 2 -> X - X
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[2][1] == '-'){
 			marcarCasilla(2, 1);
-		//Fila 2 -> - X X
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[2][0] == '-'){
 			marcarCasilla(2, 0);
-		}
-
-		/* Columnas */
-
-		/*Columna 0
-		 * X
-		 * X
-		 * -
-		 */
-		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][0] == 'X' && this.tablero_interno[2][0] == '-'){
+		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][0] == 'X' && this.tablero_interno[2][0] == '-'){
 			marcarCasilla(2, 0);
-		/*Columna 0
-		 * X
-		 * -
-		 * X
-		 */
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][0] == '-'){
 			marcarCasilla(1, 0);
-		/*Columna 0
-		 * -
-		 * X
-		 * X
-		 */
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][0] == 'X' && this.tablero_interno[0][0] == '-'){
 			marcarCasilla(0, 0);
-		/*Columna 1 
-		 * X
-		 * X
-		 * -
-		*/
 		}else if(this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][1] == '-'){
 			marcarCasilla(2, 1);
-		/*Columna 1
-		 * X
-		 * -
-		 * X
-		 */
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][1] == '-'){
 			marcarCasilla(1, 1);
-		/*Columna 1 
-		 * -
-		 * X
-		 * X
-		*/
 		}else if(this.tablero_interno[2][1] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][1] == '-'){
 			marcarCasilla(0, 1);
-		/*Columna 2
-		 * X
-		 * X
-		 * -
-		 */
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[2][2] == '-'){
 			marcarCasilla(2, 2);
-		/*Columna 2
-		 * X
-		 * -
-		 * X
-		 */
 		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][2] == '-'){
 			marcarCasilla(1, 2);
-		/*Columna 2
-		 * -
-		 * X
-		 * X
-		 */
 		}else if(this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[0][2] == '-'){
 			marcarCasilla(0, 2);
-		}
-
-		/*Diagonal 1
-		 * - 
-		 * 	- 
-		 * 	 -	
-		 */
-
-		 /*X X - */
-		if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][2] == '-'){
+		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][2] == '-'){
 			marcarCasilla(2, 2);
-		/*X - X */
 		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[1][1] == '-'){
 			marcarCasilla(1, 1);
-		/* - X X */
 		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][2] == 'X' && this.tablero_interno[0][0] == '-'){
 			marcarCasilla(0, 0);
-		}
-
-		/*Diagonal 2
-		 * 	    -
-		 * 	  -
-		 *  -
-		 */
-
-		/*X X - */
-		if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == '-'){
+		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == '-'){
 			marcarCasilla(0, 2);
-		/*X - X */
 		}else if(this.tablero_interno[2][0] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[1][1] == '-'){
 			marcarCasilla(1, 1);
-		/*- X X */
 		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][0] == '-'){
 			marcarCasilla(2, 0);
+		}else{
+			System.out.println("generando pos aleatoria.");
+			int fila = (int) (Math.random()*2);
+			int columna = (int) (Math.random()*2);
+			while(this.tablero_interno[fila][columna]!='-'){
+				System.out.println("generando pos aleatoria.");
+				fila = (int) (Math.random()*2);
+				columna = (int) (Math.random()*2);
+			}
+			marcarCasilla(fila, columna);
 		}
 	}	
+
+
 }
