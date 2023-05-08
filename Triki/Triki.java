@@ -245,8 +245,16 @@ public class Triki extends JFrame{
 			marcarCasilla(0,0);
 		}else if(this.tablero_interno[0][1] == 'X' && this.tablero_interno[1][2] == 'X' && this.tablero_interno[0][2] == '-'){
 			marcarCasilla(0,2);
-		}else if(this.tablero_interno[0][0] == 'X' || this.tablero_interno[0][2] == 'X' || this.tablero_interno[2][0] == 'X' || this.tablero_interno[2][2] == 'X'){
+		}else if(this.tablero_interno[1][1] == '-'){
 			marcarCasilla(1,1);
+		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[2][0] == 'X' && this.tablero_interno[2][2] == '-' || this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][2] == '-') {
+			marcarCasilla(2,2);
+		}else if(this.tablero_interno[1][1] == 'X' && this.tablero_interno[0][2] == '-'){
+			marcarCasilla(0,2);
+		}else if(this.tablero_interno[0][2] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][0] == '-'){
+			marcarCasilla(2,0);
+		}else if(this.tablero_interno[0][0] == 'X' && this.tablero_interno[2][1] == 'X' && this.tablero_interno[2][2] == '-'){
+			marcarCasilla(2,2);
 		}else{
 			System.out.println("generando pos aleatoria.");
 			int fila = (int) (Math.random()*2);
