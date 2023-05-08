@@ -336,6 +336,7 @@ public class Factura extends JFrame{
 
         listaProductos = new JPanel();
         listaProductos.setLayout( new BoxLayout(listaProductos, BoxLayout.Y_AXIS) );
+        listaProductos.setPreferredSize(new Dimension ((int) (tamanio.width*0.4),(int)(tamanio.height*0.6)));
         restriccion.gridx = 0;
         restriccion.gridy = 10;
         restriccion.gridheight = 1;
@@ -346,7 +347,6 @@ public class Factura extends JFrame{
         restriccion.insets = new Insets(10,0,0,10);
         listaProductos.setOpaque(true);
         listaProductos.setBackground(Color.white);
-        
         contenedorPrincipal.add(listaProductos, restriccion);
 
         etqTotal = new JLabel("Total: $ " + totalCompra);
