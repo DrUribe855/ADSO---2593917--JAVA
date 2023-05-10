@@ -41,6 +41,7 @@ public class Factura extends JFrame{
     private JButton buscarCliente;
     private JButton buscarVendedor;
     private JButton botonAgregar;
+    private JButton botonLimpiar;
 
     
     //**Creacion de constructor **//
@@ -364,11 +365,31 @@ public class Factura extends JFrame{
         etqTotal.setBackground(Color.white);
         contenedorPrincipal.add(etqTotal, restriccion);
 
+        botonLimpiar = new JButton("Limpiar");
+        botonLimpiar.setHorizontalAlignment(JButton.CENTER);
+        botonLimpiar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        restriccion.gridx = 3;
+        restriccion.gridy = 12;
+        restriccion.gridheight = 1;
+        restriccion.gridwidth = 1;
+        restriccion.weighty = 1;
+        restriccion.weightx = 20;
+        restriccion.fill = (GridBagConstraints.BOTH);
+        restriccion.insets = new Insets(10,10,0,10);
+        contenedorPrincipal.add(botonLimpiar,restriccion);
+
         add(contenedorPrincipal); 
         revalidate();
         setVisible(true);
 
         //** --- Eventos de botones --- */
+
+        ActionListener eventoLimpiarLista = new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                limpiarLista();
+            }
+        };
+        botonLimpiar.addActionListener(eventoLimpiarLista);
 
         ActionListener eventoBuscarCliente = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -534,7 +555,6 @@ public class Factura extends JFrame{
                     totalCompra += valorProducto;
                     etqTotal.setText("Total: $ " + Integer.toString(totalCompra));
                     this.inputId.setText("");
-
                     registrarCliente();
                     revalidate();
                     break;
@@ -596,6 +616,13 @@ public class Factura extends JFrame{
             deshabilitarInput(this.inputNombre);
             deshabilitarInput(this.inputDireccion);
         }
+    }
+
+    public void limpiarLista(){
+        this.listaProductos.removeAll();
+        inputCedula.setText("");
+        inputCedulaVendedor.setText("");
+        revalidate();
     }
 
 }
