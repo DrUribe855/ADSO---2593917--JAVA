@@ -291,8 +291,8 @@ public class Triki extends JFrame{
 			int columna = (int) (Math.random()*3);
 			System.out.println("generando pos aleatoria: ["+fila+"]["+columna+"]");
 			while(this.tablero_interno[fila][columna]!='-'){
-				fila = (int) (Math.random()*2);
-				columna = (int) (Math.random()*2);
+				fila = (int) (Math.random()*3);
+				columna = (int) (Math.random()*3);
 				System.out.println("generando pos aleatoria: ["+fila+"]["+columna+"]");
 			}
 			marcarCasilla(fila, columna);
