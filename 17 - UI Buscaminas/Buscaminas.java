@@ -126,6 +126,22 @@ public class Buscaminas extends JFrame{
                 this.tablero[i][j].addActionListener(evento);
             }
         }
+
+        ActionListener eventoReiniciarTablero = new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                
+                // this.minas = 20;
+                tablero_interno = new int [9][9];
+                crearTablero();
+                taparTablero();
+                revalidate();
+                System.out.println("22222");
+                initComponents();
+
+
+            }
+        };
+        btn_happy.addActionListener(eventoReiniciarTablero);
         
         add(contenedor);
         revalidate();
@@ -172,6 +188,7 @@ public class Buscaminas extends JFrame{
     
     public void crearTablero(){
         int contador = 0;
+        System.out.println("minas: "+this.minas);
         while (contador<this.minas) {
             int fila = (int) (Math.random()*(this.tablero_interno.length-1) );
             int columna = (int) (Math.random()*(this.tablero_interno[0].length-1));
@@ -273,6 +290,21 @@ public class Buscaminas extends JFrame{
             }
         }
         revalidate();
+        this.encontro = false;
     }
+
+    public void taparTablero(){
+        for (int i = 0; i<this.tablero_interno.length; i++) {
+            for (int j = 0; j<this.tablero_interno[0].length; j++) {
+                Image img_blanco = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/icono_espacio.png"));
+                img_blanco = img_blanco.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                this.tablero[i][j].setIcon( new ImageIcon(img_blanco) );
+                this.tablero[i][j].setEnabled(true);
+                this.tablero[i][j].setFocusable(false);
+            }
+        }   
+    }
+
+
     
 }
