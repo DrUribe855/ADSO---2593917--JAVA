@@ -21,6 +21,7 @@ public class Buscaminas extends JFrame{
     JButton tablero [][];
     int tablero_interno[][];
     int minas;
+    boolean encontro = false;
     
     public Buscaminas(){
         this.minas = 20;
@@ -138,8 +139,12 @@ public class Buscaminas extends JFrame{
             img_blanco = img_blanco.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             this.tablero[fila][columna].setDisabledIcon( new ImageIcon(img_blanco) );
             this.tablero[fila][columna].setEnabled(false);
+            if(this.encontro == false) {
+                destaparCasillaLibre(fila, columna);
+                System.out.println("Hola mundo");
+            }
 
-            destaparCasillaLibre(fila, columna);
+            
         }
         
         // Es un numero 
@@ -156,10 +161,12 @@ public class Buscaminas extends JFrame{
             img_bomba = img_bomba.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             this.tablero[fila][columna].setDisabledIcon( new ImageIcon(img_bomba) );
             this.tablero[fila][columna].setEnabled(false);
-
-            // Completar Algoritmo
-            // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            
+            if(this.encontro == false) {
+                this.encontro = true;
+                destaparTablero();
+                System.out.println("Hola mundo");
+            }
         }
     }
     
@@ -257,6 +264,15 @@ public class Buscaminas extends JFrame{
         if(columna-1 >= 0 && this.tablero[fila][columna-1].isEnabled()){
             destaparCasilla(fila, columna-1);
         }
+    }
+
+    public void destaparTablero(){
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                destaparCasilla(i,j);
+            }
+        }
+        revalidate();
     }
     
 }
