@@ -337,7 +337,12 @@ public class Factura extends JFrame{
 
         listaProductos = new JPanel();
         listaProductos.setLayout( new BoxLayout(listaProductos, BoxLayout.Y_AXIS) );
-        listaProductos.setPreferredSize(new Dimension ((int) (tamanio.width*0.4),(int)(tamanio.height*0.6)));
+        listaProductos.setOpaque(true);
+        listaProductos.setBackground(Color.white);
+        
+        JScrollPane scrollPane = new JScrollPane(listaProductos);
+        scrollPane.setPreferredSize( contenedorPrincipal.getSize() );
+
         restriccion.gridx = 0;
         restriccion.gridy = 10;
         restriccion.gridheight = 1;
@@ -346,9 +351,7 @@ public class Factura extends JFrame{
         restriccion.weightx = 100;
         restriccion.fill = (GridBagConstraints.BOTH);
         restriccion.insets = new Insets(10,0,0,10);
-        listaProductos.setOpaque(true);
-        listaProductos.setBackground(Color.white);
-        contenedorPrincipal.add(listaProductos, restriccion);
+        contenedorPrincipal.add(scrollPane, restriccion);
 
         etqTotal = new JLabel("Total: $ " + totalCompra);
         etqTotal.setHorizontalAlignment(JLabel.RIGHT);
@@ -407,7 +410,6 @@ public class Factura extends JFrame{
 
 
         //** --- Eventos de inputs --- */
-
         KeyListener eventoKeyBuscarCliente = new KeyListener(){
             public void keyPressed(KeyEvent e){
             }
@@ -417,6 +419,10 @@ public class Factura extends JFrame{
                 if(texto.equalsIgnoreCase("")){
                     inputNombre.setText("");
                     inputDireccion.setText("");
+                }
+
+                if (e.getKeyCode()==10) {
+                    buscarCliente();
                 }
             }
 
@@ -468,6 +474,7 @@ public class Factura extends JFrame{
         deshabilitarInput(inputNombre);
         deshabilitarInput(inputDireccion);
         deshabilitarInput(inputNombresVendedor);
+        deshabilitarInput(cantidadProducto);
 
     }
 
@@ -622,6 +629,10 @@ public class Factura extends JFrame{
         this.listaProductos.removeAll();
         inputCedula.setText("");
         inputCedulaVendedor.setText("");
+        inputNombre.setText("");
+        inputDireccion.setText("");
+        inputNombresVendedor.setText("");
+        etqTotal.setText("$ 0");
         revalidate();
     }
 

@@ -129,16 +129,15 @@ public class Buscaminas extends JFrame{
 
         ActionListener eventoReiniciarTablero = new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
-                // this.minas = 20;
-                tablero_interno = new int [9][9];
+                for (int i=0;i<tablero_interno.length;i++) {
+                    for (int j=0; j<tablero_interno[i].length; j++) {
+                        tablero_interno[i][j] = 0;
+                    }
+                }
                 crearTablero();
                 taparTablero();
                 revalidate();
                 System.out.println("22222");
-                initComponents();
-
-
             }
         };
         btn_happy.addActionListener(eventoReiniciarTablero);
@@ -296,11 +295,7 @@ public class Buscaminas extends JFrame{
     public void taparTablero(){
         for (int i = 0; i<this.tablero_interno.length; i++) {
             for (int j = 0; j<this.tablero_interno[0].length; j++) {
-                Image img_blanco = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/icono_espacio.png"));
-                img_blanco = img_blanco.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                this.tablero[i][j].setIcon( new ImageIcon(img_blanco) );
                 this.tablero[i][j].setEnabled(true);
-                this.tablero[i][j].setFocusable(false);
             }
         }   
     }
