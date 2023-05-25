@@ -1,7 +1,14 @@
 *.class
+<<<<<<< HEAD
 /18 - UI Buscaminas/nbproject/private/
 /19 - Registro Usuarios/nbproject/private/
 /19 - Registro Usuarios/build/
 /Registro Usuarios/nbproject/private/
 /Registro Usuarios/build/
 /Registro Usuarios/dist/
+=======
+/18 - Registro Usuarios/nbproject/private/
+/18 - Registro Usuarios/build/
+/21-FacturadorCompleto/nbproject/private/
+/21-FacturadorCompleto/build/
+>>>>>>> 81b7cf656e1fa4a68412e47b35e6538f443b1e35
