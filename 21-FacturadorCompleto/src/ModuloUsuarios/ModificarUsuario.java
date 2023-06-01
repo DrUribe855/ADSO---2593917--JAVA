@@ -87,7 +87,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqNombres.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoNombres.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoNombres.setEnabled(false);
         campoNombres.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         etqApellidos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -303,7 +302,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                     if(this.listaPersonas[i].getCedula().equalsIgnoreCase(cedula)){
                         posicionUsuario = i;
                         campoNombres.setText(this.listaPersonas[i].getNombres());
-                        campoApellidos.setText(this.listaPersonas[i].getNombres());
+                        campoApellidos.setText(this.listaPersonas[i].getApellidos());
                         campoTelefono.setText(this.listaPersonas[i].getTelefono());
                         campoDireccion.setText(this.listaPersonas[i].getDireccion());
                         campoEmail.setText(this.listaPersonas[i].getEmail());
@@ -313,6 +312,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                         habilitarCampo(campoTelefono);
                         habilitarCampo(campoDireccion);
                         habilitarCampo(campoEmail);
+                        btnRegistrar.setEnabled(true);
                     }else{
                         labelUsuarioEncontrado.setText("Usuario NO encontrado");
                         campoNombres.setText("");
@@ -333,15 +333,21 @@ public class ModificarUsuario extends javax.swing.JFrame {
         String direccion = campoDireccion.getText();
         String email = campoEmail.getText();
         
-        this.listaPersonas[posicionUsuario].setNombres(nombre);
-        this.listaPersonas[posicionUsuario].setApellidos(apellido);
-        this.listaPersonas[posicionUsuario].setTelefono(telefono);
-        this.listaPersonas[posicionUsuario].setDireccion(direccion);
-        this.listaPersonas[posicionUsuario].setEmail(email);
+        if(!nombre.equals("") && !apellido.equals("") && !telefono.equals("") && !direccion.equals("") && !email.equals("")){
+            this.listaPersonas[posicionUsuario].setNombres(nombre);
+            this.listaPersonas[posicionUsuario].setApellidos(apellido);
+            this.listaPersonas[posicionUsuario].setTelefono(telefono);
+            this.listaPersonas[posicionUsuario].setDireccion(direccion);
+            this.listaPersonas[posicionUsuario].setEmail(email);
+            dispose();
+            this.ventanaMenu.setVisible(true);
+            Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
+        }else{
+            Alert alerta = new Alert("INVALIDO", "Todos los campos deben estar validados","error");
+        }
         
-        dispose();
-        Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
-        this.ventanaMenu.setVisible(true);
+        
+        
         
     }
     
