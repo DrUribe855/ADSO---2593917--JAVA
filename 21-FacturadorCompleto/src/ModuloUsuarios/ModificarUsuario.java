@@ -87,7 +87,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqNombres.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoNombres.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoNombres.setEnabled(false);
         campoNombres.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         etqApellidos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -334,16 +333,20 @@ public class ModificarUsuario extends javax.swing.JFrame {
         String direccion = campoDireccion.getText();
         String email = campoEmail.getText();
         
-        this.listaPersonas[posicionUsuario].setNombres(nombre);
-        this.listaPersonas[posicionUsuario].setApellidos(apellido);
-        this.listaPersonas[posicionUsuario].setTelefono(telefono);
-        this.listaPersonas[posicionUsuario].setDireccion(direccion);
-        this.listaPersonas[posicionUsuario].setEmail(email);
+        if(!nombre.equals("") && !apellido.equals("") && !telefono.equals("") && !direccion.equals("") && !email.equals("")){
+            this.listaPersonas[posicionUsuario].setNombres(nombre);
+            this.listaPersonas[posicionUsuario].setApellidos(apellido);
+            this.listaPersonas[posicionUsuario].setTelefono(telefono);
+            this.listaPersonas[posicionUsuario].setDireccion(direccion);
+            this.listaPersonas[posicionUsuario].setEmail(email);
+            dispose();
+            this.ventanaMenu.setVisible(true);
+            Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
+        }else{
+            Alert alerta = new Alert("INVALIDO", "Todos los campos deben estar validados","error");
+        }
         
         
-        dispose();
-        this.ventanaMenu.setVisible(true);
-        Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
         
         
     }

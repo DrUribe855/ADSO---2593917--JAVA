@@ -6,7 +6,9 @@ import ModuloUsuarios.ModificarUsuario;
 import Clases.Persona;
 import Clases.Producto;
 import ModuloProductos.CrearProducto;
+import ModuloProductos.ModificarProducto;
 import ModuloUsuarios.EliminarUsuarios;
+import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.*;
 
@@ -434,7 +436,9 @@ public class Menu extends JFrame {
     }//GEN-LAST:event_btnEliminarVendedorActionPerformed
 
     private void btnModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProductoActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        ModificarProducto ventana = new ModificarProducto(this, this.listaProductos, this.indexProductos, "PRODUCTO");
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnModificarProductoActionPerformed
 
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
@@ -462,6 +466,11 @@ public class Menu extends JFrame {
     
     public void alertaCreacionProducto(){
         Alert alerta = new Alert("CORRECTO", "Se ha creado un nuevo usuario.", "success"); 
+    }
+    
+    public void deshabilitarCampos(JTextField campo){
+        campo.setEnabled(false);
+        campo.setBackground(Color.gray);
     }
     
    
