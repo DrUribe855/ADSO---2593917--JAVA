@@ -6,6 +6,7 @@ import ModuloUsuarios.ModificarUsuario;
 import Clases.Persona;
 import Clases.Producto;
 import ModuloProductos.CrearProducto;
+import ModuloProductos.ListarProductos;
 import ModuloProductos.ModificarProducto;
 import ModuloUsuarios.EliminarUsuarios;
 import java.awt.Color;
@@ -446,7 +447,9 @@ public class Menu extends JFrame {
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
     private void btnListarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarProductosActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        ListarProductos ventana = new ListarProductos(this, this.listaProductos, this.indexProductos, "PRODUCTOS");
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnListarProductosActionPerformed
 
     private void btnCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductoActionPerformed
