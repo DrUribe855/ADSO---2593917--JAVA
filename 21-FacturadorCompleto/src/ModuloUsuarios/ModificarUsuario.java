@@ -140,7 +140,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         btnRegistrar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("MODIFICAR");
-        btnRegistrar.setEnabled(false);
         btnRegistrar.setFocusable(false);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,7 +303,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                     if(this.listaPersonas[i].getCedula().equalsIgnoreCase(cedula)){
                         posicionUsuario = i;
                         campoNombres.setText(this.listaPersonas[i].getNombres());
-                        campoApellidos.setText(this.listaPersonas[i].getNombres());
+                        campoApellidos.setText(this.listaPersonas[i].getApellidos());
                         campoTelefono.setText(this.listaPersonas[i].getTelefono());
                         campoDireccion.setText(this.listaPersonas[i].getDireccion());
                         campoEmail.setText(this.listaPersonas[i].getEmail());
@@ -314,6 +313,7 @@ public class ModificarUsuario extends javax.swing.JFrame {
                         habilitarCampo(campoTelefono);
                         habilitarCampo(campoDireccion);
                         habilitarCampo(campoEmail);
+                        btnRegistrar.setEnabled(true);
                     }else{
                         labelUsuarioEncontrado.setText("Usuario NO encontrado");
                         campoNombres.setText("");
@@ -340,9 +340,11 @@ public class ModificarUsuario extends javax.swing.JFrame {
         this.listaPersonas[posicionUsuario].setDireccion(direccion);
         this.listaPersonas[posicionUsuario].setEmail(email);
         
+        
         dispose();
-        Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
         this.ventanaMenu.setVisible(true);
+        Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
+        
         
     }
     
