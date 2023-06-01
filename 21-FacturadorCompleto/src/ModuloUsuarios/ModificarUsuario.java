@@ -140,7 +140,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         btnRegistrar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("MODIFICAR");
-        btnRegistrar.setEnabled(false);
         btnRegistrar.setFocusable(false);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
