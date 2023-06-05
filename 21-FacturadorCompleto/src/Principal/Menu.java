@@ -1,5 +1,6 @@
 package Principal;
 
+import Clases.DataBase;
 import ModuloUsuarios.CrearUsuario;
 import ModuloUsuarios.ListarUsuarios;
 import ModuloUsuarios.ModificarUsuario;
@@ -16,6 +17,7 @@ import javax.swing.*;
 
 public class Menu extends JFrame {
     
+    public DataBase database;
     public Persona listaClientes [];
     public Persona listaVendedores [];
     public Producto listaProductos[];
@@ -30,6 +32,7 @@ public class Menu extends JFrame {
         this.indexClientes = 0;
         this.indexVendedores = 0;
         this.indexProductos = 0;
+        this.database = new DataBase();
         
         initComponents();
         initAlternComponents();
@@ -511,4 +514,5 @@ public class Menu extends JFrame {
     private javax.swing.JLabel etqMenu;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
 }

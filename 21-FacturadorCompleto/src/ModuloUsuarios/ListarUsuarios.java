@@ -5,6 +5,7 @@ import Principal.Menu;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+import java.sql.*;
 
 import javax.swing.border.EmptyBorder;
 
@@ -43,7 +44,7 @@ public class ListarUsuarios extends javax.swing.JFrame {
     }
     
     public void imprimirClientes(){
-        for(int i = 0; i < this.indexLista; i++){
+        /*for(int i = 0; i < this.indexLista; i++){
             if(this.listaPersonas[i] != null){
                 etqTemporal = new JLabel(i + " " + this.listaPersonas[i].getCedula()+" - "+this.listaPersonas[i].getNombres()+" "+this.listaPersonas[i].getApellidos());
                 etqTemporal.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -53,6 +54,24 @@ public class ListarUsuarios extends javax.swing.JFrame {
                 JPopupMenu.Separator separador = new JPopupMenu.Separator();
                 contenUsuarios.add(separador);
             }
+        }*/
+        
+        try {
+            ResultSet registros = this.ventanaMenu.database.listaPersonas();
+            if(registros.getRow()==1){
+                do{
+                    etqTemporal = new JLabel(registros.getRow() + " " + registros.getString("cedula") + " - " + registros.getString("nombres") + " - " + registros.getString("apellidos"));
+                    etqTemporal.setFont(new Font("Arial", Font.PLAIN, 12));
+                    etqTemporal.setBorder(new EmptyBorder (2,10,2,10));
+                    contenUsuarios.add(etqTemporal);
+                    JPopupMenu.Separator separador = new JPopupMenu.Separator();
+                    contenUsuarios.add(separador);
+                }while(registros.next());
+            }else{
+                System.out.println("No existen personas");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al extraer los datos: " + e.getMessage());
         }
         revalidate();
     }
@@ -148,4 +167,5 @@ public class ListarUsuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel principalContainer;
     // End of variables declaration//GEN-END:variables
+
 }
