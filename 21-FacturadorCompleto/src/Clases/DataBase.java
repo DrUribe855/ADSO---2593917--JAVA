@@ -33,4 +33,20 @@ public class DataBase {
             return null;
         }
     }
+    
+    public boolean insertarPersona(String cedula, String nombres, String apellidos, String telefono, String direccion , String email){
+        String consulta = "INSERT INTO personas (cedula, nombres, apellidos, telefono, direccion, email) values ('"+cedula+"','"+nombres+"','"+apellidos+"','"+telefono+"','"+direccion+"','"+email+"')";
+        try{
+            int respuesta = manipularDB.executeUpdate(consulta);
+            if(respuesta > 0){
+                System.out.println("REGISTRO INSERTADO CON EXITO");
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println("Error al insertar: " + e.getMessage());
+            return false;
+        }
+    }
 }

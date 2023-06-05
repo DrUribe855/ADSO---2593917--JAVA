@@ -276,12 +276,20 @@ public class CrearUsuario extends javax.swing.JFrame {
         String email = campoEmail.getText();
         
         if (!cedula.equals("") && !nombres.equals("") && !apellidos.equals("") && !direccion.equals("") && !telefono.equals("") && !email.equals("") ) {
-            Persona temporal = new Persona(cedula, nombres, apellidos, telefono, direccion, email);
-            this.listaPersonas[ this.indexLista ] = temporal;
-            if (this.titulo.equals("CLIENTE")) {
-                this.ventanaMenu.indexClientes++;        
-            }else if(this.titulo.equals("VENDEDOR")){
-                this.ventanaMenu.indexVendedores++;
+            //Persona temporal = new Persona(cedula, nombres, apellidos, telefono, direccion, email);
+            //this.listaPersonas[ this.indexLista ] = temporal;
+            
+            boolean respuesta = this.ventanaMenu.database.insertarPersona(cedula, nombres, apellidos, telefono, direccion, email);
+            
+            if(respuesta){
+                this.ventanaMenu.setVisible(true);
+                this.ventanaMenu.alertCreacionUsuario();
+                dispose();
+            }else{
+                Alert alerta = new Alert("CEDULA EXISTE", "La cédula ya se encuentra registrada", "error");
+                this.campoCedula.setText("");
+                validarInput(campoCedula);
+                campoCedula.requestFocus();
             }
             
             this.ventanaMenu.setVisible(true);
