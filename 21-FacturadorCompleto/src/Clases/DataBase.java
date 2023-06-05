@@ -39,7 +39,6 @@ public class DataBase {
         try{
             int respuesta = manipularDB.executeUpdate(consulta);
             if(respuesta > 0){
-                System.out.println("REGISTRO INSERTADO CON EXITO");
                 return true;
             }else{
                 return false;
@@ -47,6 +46,49 @@ public class DataBase {
         }catch(SQLException e){
             System.out.println("Error al insertar: " + e.getMessage());
             return false;
+        }
+    }
+    
+    public boolean eliminarPersona(String cedula){
+        try{
+            String consulta = "DELETE FROM personas WHERE cedula = '"+cedula+"'";
+            int resp_consulta = manipularDB.executeUpdate(consulta);
+            if(resp_consulta > 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error --> Delete: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean modificarPersonas(String cedula, String nombres, String apellidos, String telefono, String direccion, String email){
+        try {
+            String consulta = "UPDATE personas SET nombres = '"+cedula+"','"+nombres+"','"+apellidos+"','"+telefono+"','"+direccion+"','"+email+"' WHERE cedula = '"+cedula+"'";
+            int resp_consulta = manipularDB.executeUpdate(consulta);
+            if(resp_consulta > 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("--> Error Update: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public ResultSet buscarPersona(String cedula){
+        try {
+            ResultSet usuario = this.manipularDB.executeQuery("SELECT * FROM personas WHERE cedula = '"+cedula+"'");
+            usuario.next();
+            return usuario;
+        } catch (SQLException e) {
+            System.out.println("Error en busqueda: " + e.getMessage());
+            return null;
         }
     }
 }

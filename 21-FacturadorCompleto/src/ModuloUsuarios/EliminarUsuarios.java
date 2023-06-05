@@ -163,29 +163,12 @@ public class EliminarUsuarios extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         String cedula = campoCedula.getText();
         if(cedula != ""){
-            boolean encontrado = false;
-            for(int i = 0; i < listaPersonas.length; i++){
-                if(this.listaPersonas[i] != null){
-                    System.out.print("actual: "+this.listaPersonas[i].getCedula());
-                    if(this.listaPersonas[i].getCedula().equalsIgnoreCase(cedula)){
-                        encontrado = true;
-                        
-                        for(int j = i; j < this.listaPersonas.length-1; j++){
-                            this.listaPersonas[j] = this.listaPersonas[j+1];
-                        }
-                        this.listaPersonas[this.listaPersonas.length-1] = null;
-                        this.ventanaMenu.setVisible(true);
-                        Alert alerta = new Alert("VALIDO","El usuario se ha eliminado con éxito","success");
-                        dispose();
-                        break;
-                    }
-                }else{
-                    break;
-                }
-            }
+            boolean respuesta = this.ventanaMenu.database.eliminarPersona(cedula);
             
-            if(!encontrado){
-                Alert alerta = new Alert("ERROR","El usuario no ha sido encontrado","error");
+            if(respuesta){
+                dispose();
+                Alert alerta = new Alert("VALIDADO", "El usuario ha sido eliminado con éxito", "success");
+                this.ventanaMenu.setVisible(true);
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed

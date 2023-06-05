@@ -6,6 +6,7 @@ import Principal.Alert;
 import Principal.Menu;
 import java.awt.Color;
 import javax.swing.JTextField;
+import java.sql.*;
 
 public class ModificarUsuario extends javax.swing.JFrame {
     
@@ -95,7 +96,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqApellidos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoApellidos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoApellidos.setEnabled(false);
         campoApellidos.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         etqTelefono.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -104,7 +104,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqTelefono.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoTelefono.setEnabled(false);
         campoTelefono.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         etqDireccion.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -113,7 +112,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqDireccion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoDireccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoDireccion.setEnabled(false);
         campoDireccion.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         etqEmail.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -122,7 +120,6 @@ public class ModificarUsuario extends javax.swing.JFrame {
         etqEmail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         campoEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        campoEmail.setEnabled(false);
         campoEmail.setMargin(new java.awt.Insets(2, 5, 2, 5));
 
         btnCancelar.setBackground(new java.awt.Color(153, 153, 153));
@@ -297,48 +294,35 @@ public class ModificarUsuario extends javax.swing.JFrame {
         String direccion = campoDireccion.getText();
         String email = campoEmail.getText();
         if(cedula != ""){
-            for(int i = 0; i < this.listaPersonas.length; i++){
-                if(this.listaPersonas[i]!= null){
-                    if(this.listaPersonas[i].getCedula().equalsIgnoreCase(cedula)){
-                        posicionUsuario = i;
-                        campoNombres.setText(this.listaPersonas[i].getNombres());
-                        campoApellidos.setText(this.listaPersonas[i].getApellidos());
-                        campoTelefono.setText(this.listaPersonas[i].getTelefono());
-                        campoDireccion.setText(this.listaPersonas[i].getDireccion());
-                        campoEmail.setText(this.listaPersonas[i].getEmail());
-                        labelUsuarioEncontrado.setText("Usuario encontrado");
-                        habilitarCampo(campoNombres);
-                        habilitarCampo(campoApellidos);
-                        habilitarCampo(campoTelefono);
-                        habilitarCampo(campoDireccion);
-                        habilitarCampo(campoEmail);
-                        btnRegistrar.setEnabled(true);
-                    }else{
-                        labelUsuarioEncontrado.setText("Usuario NO encontrado");
-                        campoNombres.setText("");
-                        campoApellidos.setText("");
-                        campoTelefono.setText("");
-                        campoDireccion.setText("");
-                        campoEmail.setText("");
-                    }
-                }     
+            try {
+                ResultSet registros = this.ventanaMenu.database.buscarPersona(cedula);
+                if(registros != null){
+                    this.campoNombres.setText(registros.getString("nombres"));
+                    this.campoApellidos.setText(registros.getString("apellidos"));
+                    this.campoTelefono.setText(registros.getString("telefono"));
+                    this.campoDireccion.setText(registros.getString("direccion"));
+                    this.campoEmail.setText(registros.getString("email"));
+                }else{
+                    Alert alerta = new Alert("INVALIDO","El usuario no fue encontrado","error");
+                }
+                
+            } catch (SQLException e) {
+                System.out.println("Error al extraer la información: " + e.getMessage());
             }
+            
         }
     }
     
     public void modificarUsuario(){
+        String cedula = campoCedula.getText();
         String nombre = campoNombres.getText();
         String apellido = campoApellidos.getText();
         String telefono = campoTelefono.getText();
         String direccion = campoDireccion.getText();
         String email = campoEmail.getText();
         
-        if(!nombre.equals("") && !apellido.equals("") && !telefono.equals("") && !direccion.equals("") && !email.equals("")){
-            this.listaPersonas[posicionUsuario].setNombres(nombre);
-            this.listaPersonas[posicionUsuario].setApellidos(apellido);
-            this.listaPersonas[posicionUsuario].setTelefono(telefono);
-            this.listaPersonas[posicionUsuario].setDireccion(direccion);
-            this.listaPersonas[posicionUsuario].setEmail(email);
+        if(!cedula.equals("") && !nombre.equals("") && !apellido.equals("") && !telefono.equals("") && !direccion.equals("") && !email.equals("")){
+            this.ventanaMenu.database.modificarPersonas(cedula, nombre, apellido, telefono, direccion, email);
             dispose();
             this.ventanaMenu.setVisible(true);
             Alert alerta = new Alert("VALIDADO","La información ha sido modificada","success");
