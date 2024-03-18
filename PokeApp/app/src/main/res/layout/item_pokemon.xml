@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
+            <TextView
+                android:id="@+id/idPokemon"
+                android:textSize="15dp"
+                android:text="XXXXX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:textSize="15dp"
+                android:paddingLeft="30dp"
+                android:id="@+id/nombrePokemon"
+                android:text="XXXXX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/boton_detalle_pokemon"
+            android:src="@drawable/icono_pokeball"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            ></ImageView>
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
